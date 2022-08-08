@@ -33,7 +33,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -47,7 +47,7 @@ TextureImporter:
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 32
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -66,7 +66,7 @@ TextureImporter:
   platformSettings:
   - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
-    maxTextureSize: 2048
+    maxTextureSize: 8192
     resizeAlgorithm: 0
     textureFormat: -1
     textureCompression: 1
@@ -2817,13 +2817,14 @@ TextureImporter:
       133_Assets_CHARACTER_1_16: -827932654
       133_Assets_CHARACTER_1_19: -1770944978
       133_Assets_CHARACTER_1_104: 622976392
-      133_Assets_CHARACTER_1_38: -808548024
-      133_Assets_CHARACTER_1_66: -278871283
       133_Assets_CHARACTER_1_85: -83070978
+      133_Assets_CHARACTER_1_66: -278871283
+      133_Assets_CHARACTER_1_99: 1336400420
+      133_Assets_CHARACTER_1_38: -808548024
       133_Assets_CHARACTER_1_61: 1719131987
       133_Assets_CHARACTER_1_81: -163527317
       133_Assets_CHARACTER_1_39: -1763850185
-      133_Assets_CHARACTER_1_99: 1336400420
+      133_Assets_CHARACTER_1_125: 1969729987
       133_Assets_CHARACTER_1_42: -412257838
       133_Assets_CHARACTER_1_107: -343120458
       133_Assets_CHARACTER_1_72: -1665222851
@@ -2834,7 +2835,6 @@ TextureImporter:
       133_Assets_CHARACTER_1_112: 782095235
       133_Assets_CHARACTER_1_44: -772835728
       133_Assets_CHARACTER_1_115: 949638257
-      133_Assets_CHARACTER_1_125: 1969729987
       133_Assets_CHARACTER_1_113: -1992767337
       133_Assets_CHARACTER_1_101: -2142424595
       133_Assets_CHARACTER_1_48: -929564895
@@ -2852,8 +2852,8 @@ TextureImporter:
       133_Assets_CHARACTER_1_91: 499430020
       133_Assets_CHARACTER_1_83: -1578484782
       133_Assets_CHARACTER_1_15: 976055307
-      133_Assets_CHARACTER_1_71: 556802739
       133_Assets_CHARACTER_1_68: -1288912743
+      133_Assets_CHARACTER_1_71: 556802739
       133_Assets_CHARACTER_1_64: 550708637
       133_Assets_CHARACTER_1_37: -1876052724
       133_Assets_CHARACTER_1_98: -185093288

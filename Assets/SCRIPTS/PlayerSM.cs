@@ -6,18 +6,19 @@ public class PlayerSM : MonoBehaviour
 {
     [SerializeField] PlayerState currentState;
     [SerializeField] Animator animator;
+    [SerializeField] Transform playerGraphics;
     [SerializeField] float speed;
     [SerializeField] float attackDuration = 1f;
+    [SerializeField] AnimationCurve jumpCurve;
+    [SerializeField] float jumpDuration = 1f;
     [SerializeField] float jumpHeight = 2f;
     [SerializeField] float health = 10f;
 
     Rigidbody2D rb2d;
     Vector2 moveDirection;
-    Vector2 velocity;
-    bool isGrounded;
-    bool isAttacking;
 
     float stopAttackTime;
+    float jumpTimer;
 
     public enum PlayerState
     {
@@ -33,8 +34,6 @@ public class PlayerSM : MonoBehaviour
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
-
-        isGrounded = true;
 
         currentState = PlayerState.IDLE;
 
@@ -73,7 +72,6 @@ public class PlayerSM : MonoBehaviour
                 break;
             case PlayerState.JUMP:
                 animator.SetTrigger("JUMP");
-                // rb2D.AddForce(new Vector2(0, jumpForce), ForceMode2D.Impulse);
                 break;
             default:
                 break;
@@ -82,18 +80,26 @@ public class PlayerSM : MonoBehaviour
 
     void OnStateUpdate()
     {
-        float horizontalInput = Input.GetAxis("Horizontal");
-        float verticalInput = Input.GetAxis("Vertical");
+        float horizontalInput = Input.GetAxisRaw("Horizontal");
+        float verticalInput = Input.GetAxisRaw("Vertical");
 
         moveDirection = new Vector2(horizontalInput, verticalInput);
 
         bool jumpButton = Input.GetButtonDown("Jump");
         bool attack = Input.GetButtonDown("Fire1");
 
+        if(horizontalInput < 0)
+        {
+            playerGraphics.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
+        } else
+        {
+            playerGraphics.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+        }
+
         switch (currentState)
         {
             case PlayerState.IDLE:
-                if(verticalInput != 0 || horizontalInput != 0)
+                if(moveDirection.magnitude != 0)
                 {
                     TransitionToState(PlayerState.WALK);
                 }
@@ -116,7 +122,7 @@ public class PlayerSM : MonoBehaviour
                 break;
 
             case PlayerState.WALK:
-                if (horizontalInput == 0 && verticalInput == 0)
+                if (moveDirection.magnitude == 0)
                 {
                     TransitionToState(PlayerState.IDLE);
                 }
@@ -141,7 +147,7 @@ public class PlayerSM : MonoBehaviour
             case PlayerState.ATTACK:
                 if(Time.time > stopAttackTime)
                 {
-                    if(horizontalInput == 0 && verticalInput == 0)
+                    if(moveDirection.magnitude == 0)
                     {
                         TransitionToState(PlayerState.IDLE);
                     } else
@@ -157,6 +163,24 @@ public class PlayerSM : MonoBehaviour
                 break;
             case PlayerState.RUN:
             case PlayerState.JUMP:
+                jumpTimer += Time.deltaTime;
+
+                float y = jumpCurve.Evaluate(jumpTimer);
+
+                playerGraphics.localPosition = new Vector3(playerGraphics.localPosition.x, y * jumpHeight, playerGraphics.localPosition.z);
+
+                if(y == 0)
+                {
+                    if (moveDirection.magnitude == 0)
+                    {
+                        TransitionToState(PlayerState.IDLE);
+                    }
+                    else
+                    {
+                        TransitionToState(PlayerState.WALK);
+                    }
+                }
+
                 if (health <= 0)
                 {
                     TransitionToState(PlayerState.DEATH);
@@ -174,7 +198,8 @@ public class PlayerSM : MonoBehaviour
             case PlayerState.IDLE:
                 break;
             case PlayerState.WALK:
-                
+                rb2d.velocity = Vector2.zero;
+
                 animator.SetBool("WALK", false);
                 break;
             case PlayerState.ATTACK:
@@ -184,6 +209,7 @@ public class PlayerSM : MonoBehaviour
             case PlayerState.DEATH:
                 break;
             case PlayerState.JUMP:
+                jumpTimer = 0;
                 break;
             default:
                 break;
@@ -201,8 +227,24 @@ public class PlayerSM : MonoBehaviour
 
     private void OnStateFixedUpdate()
     {
-        velocity = moveDirection.normalized * speed;
-
-        rb2d.velocity = velocity;
+        switch (currentState)
+        {
+            case PlayerState.IDLE:;
+                break;
+            case PlayerState.WALK:
+                rb2d.velocity = moveDirection.normalized * speed;
+                break;
+            case PlayerState.ATTACK:
+                break;
+            case PlayerState.RUN:
+                break;
+            case PlayerState.DEATH:
+                break;
+            case PlayerState.JUMP:
+                break;
+            default:
+                break;
+        } ;
+        
     }
 }
