@@ -13,6 +13,7 @@ public class PlayerSM : MonoBehaviour
     [SerializeField] float jumpDuration = 1f;
     [SerializeField] float jumpHeight = 2f;
     [SerializeField] float health = 10f;
+    [SerializeField] GameObject attackPoint;
 
     Rigidbody2D rb2d;
     Vector2 moveDirection;
@@ -62,6 +63,7 @@ public class PlayerSM : MonoBehaviour
                 animator.SetBool("WALK", true);
                 break;
             case PlayerState.ATTACK:
+                attackPoint.SetActive(true);
                 stopAttackTime = Time.time + attackDuration;
                 animator.SetTrigger("ATTACK");
                 break;
@@ -203,6 +205,7 @@ public class PlayerSM : MonoBehaviour
                 animator.SetBool("WALK", false);
                 break;
             case PlayerState.ATTACK:
+                attackPoint.SetActive(false);
                 break;
             case PlayerState.RUN:
                 break;
@@ -246,5 +249,21 @@ public class PlayerSM : MonoBehaviour
                 break;
         } ;
         
+    }
+
+    public void TakeDamage(int damage)
+    {
+        health -= damage;
+        animator.SetTrigger("HURT");
+
+        if (health < 0)
+        {
+            TransitionToState(PlayerState.DEATH);
+        }
+    }
+
+    public void Die()
+    {
+        Destroy(gameObject);
     }
 }
