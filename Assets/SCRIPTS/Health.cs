@@ -5,6 +5,7 @@ using UnityEngine;
 public class Health : MonoBehaviour
 {
     [SerializeField] int health = 5;
+    [SerializeField] Animator animator;
 
     // Start is called before the first frame update
     void Start()
@@ -21,8 +22,9 @@ public class Health : MonoBehaviour
     public void TakeDamage(int damage)
     {
         health -= damage;
+        animator.SetTrigger("HURT");
 
-        if(health < 0)
+        if (health < 0)
         {
             // Remplacer par transition to state death
             Destroy(gameObject);

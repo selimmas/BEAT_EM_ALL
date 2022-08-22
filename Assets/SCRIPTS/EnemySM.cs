@@ -8,17 +8,19 @@ public class EnemySM : MonoBehaviour
     [SerializeField] Animator animator;
     [SerializeField] Transform enemyGraphics;
     [SerializeField] float speed;
+    [SerializeField] float attackDelay = 1f;
     [SerializeField] float attackDuration = 3f;
     [SerializeField] AnimationCurve jumpCurve;
     [SerializeField] float health = 20f;
     [SerializeField] Transform targuet;
+    [SerializeField] float attackDistance = 0.5f;
+    [SerializeField] GameObject attackPoint;
 
     Rigidbody2D rb2d;
     Vector2 moveDirection;
 
-    float stopAttackTime;
+    float nextAttackTime;
     bool attack;
-
 
     public enum EnemyState
     {
@@ -26,10 +28,7 @@ public class EnemySM : MonoBehaviour
         WALK,
         ATTACK,
         DEATH,
-
     }
-
-
 
     // Start is called before the first frame update
     void Start()
@@ -55,12 +54,10 @@ public class EnemySM : MonoBehaviour
             case EnemyState.IDLE:
                 break;
             case EnemyState.WALK:
-
                 animator.SetBool("WALK", true);
                 break;
             case EnemyState.ATTACK:
-                stopAttackTime = Time.time + attackDuration;
-                animator.SetTrigger("ATTACK");
+                attackPoint.SetActive(true);
                 break;
             case EnemyState.DEATH:
                 animator.SetTrigger("DEATH");
@@ -69,16 +66,16 @@ public class EnemySM : MonoBehaviour
     }
     void OnStateUpdate()
     {
-
         moveDirection = targuet.position - transform.position;
+
         float distance = Vector2.Distance(targuet.position, transform.position);
 
-
-        if (moveDirection.x < 0)
+        if (moveDirection.magnitude != 0 && moveDirection.x < 0)
         {
             enemyGraphics.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
         }
-        else
+
+        if (moveDirection.magnitude != 0 && moveDirection.x > 0)
         {
             enemyGraphics.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
         }
@@ -99,6 +96,7 @@ public class EnemySM : MonoBehaviour
                 {
                     TransitionToState(EnemyState.DEATH);
                 }
+
                 break;
             case EnemyState.WALK:
                 rb2d.velocity = moveDirection.normalized * speed;
@@ -107,11 +105,28 @@ public class EnemySM : MonoBehaviour
                 {
                     TransitionToState(EnemyState.IDLE);
                 }
-                if (distance < 1)
+                if (distance < attackDistance)
                 {
-                    TransitionToState(EnemyState.IDLE);
-
+                    TransitionToState(EnemyState.ATTACK);
                 }
+
+                break;
+            case EnemyState.ATTACK:
+                if (Time.time > nextAttackTime)
+                {
+                    attackPoint.SetActive(true);
+
+                    nextAttackTime = Time.time + attackDuration + attackDelay;
+                    animator.SetTrigger("ATTACK");
+
+                    StartCoroutine(DisableAttackPoint());
+                }
+
+                if (distance > attackDistance)
+                {
+                    TransitionToState(EnemyState.WALK);
+                }
+
                 break;
             default:
                 break;
@@ -127,10 +142,8 @@ public class EnemySM : MonoBehaviour
             case EnemyState.IDLE:
                 break;
 
-
             case EnemyState.WALK:
                 rb2d.velocity = Vector2.zero;
-
                 animator.SetBool("WALK", false);
                 break;
             case EnemyState.ATTACK:
@@ -154,7 +167,6 @@ public class EnemySM : MonoBehaviour
 
     void OnStateFixedUpdate()
     {
-
         switch (currentState)
         {
             case EnemyState.IDLE:
@@ -169,6 +181,13 @@ public class EnemySM : MonoBehaviour
             default:
                 break;
         }
+    }
+
+    IEnumerator DisableAttackPoint()
+    {
+        yield return new WaitForSeconds(attackDuration);
+
+        attackPoint.SetActive(false);
     }
 }
 

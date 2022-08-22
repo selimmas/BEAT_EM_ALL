@@ -90,10 +90,12 @@ public class PlayerSM : MonoBehaviour
         bool jumpButton = Input.GetButtonDown("Jump");
         bool attack = Input.GetButtonDown("Fire1");
 
-        if(horizontalInput < 0)
+        if(moveDirection.magnitude != 0 && horizontalInput < 0)
         {
             playerGraphics.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
-        } else
+        } 
+        
+        if(moveDirection.magnitude != 0 && horizontalInput > 0)
         {
             playerGraphics.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
         }
@@ -265,5 +267,10 @@ public class PlayerSM : MonoBehaviour
     public void Die()
     {
         Destroy(gameObject);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Debug.Log("test");
     }
 }
