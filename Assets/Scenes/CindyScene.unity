@@ -329,7 +329,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentState: 0
-  animator: {fileID: 0}
+  animator: {fileID: 451158292}
   enemyGraphics: {fileID: 104864437}
   speed: 2
   attackDuration: 3
