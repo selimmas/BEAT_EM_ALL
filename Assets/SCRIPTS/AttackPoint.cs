@@ -8,7 +8,6 @@ public class AttackPoint : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        
         if(collision.gameObject.tag == "Enemy")
         {
             collision.gameObject.GetComponent<Health>().TakeDamage(damage);
@@ -16,7 +15,6 @@ public class AttackPoint : MonoBehaviour
 
         if (collision.gameObject.tag == "Player")
         {
-            Debug.Log("collide");
             collision.gameObject.GetComponent<PlayerSM>().TakeDamage(damage);
         }
     }
