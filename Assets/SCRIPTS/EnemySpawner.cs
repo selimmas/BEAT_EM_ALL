@@ -7,18 +7,26 @@ public class EnemySpawner : MonoBehaviour
     [SerializeField] Transform player;
     [SerializeField] GameObject enemyPrefab;
     [SerializeField] int enemyCount = 10;
+    [SerializeField] float spawnDelay = 2;
 
     // Update is called once per frame
-    void Update()
+    void Start()
     {
-        if(enemyCount == 0)
+        GameManager.instance.IncrementEnemeyCount(enemyCount);
+        StartCoroutine(SpawnEnemies());
+    }
+
+    IEnumerator SpawnEnemies()
+    {
+        while(enemyCount > 0)
         {
-            return;
+            GameObject enemey = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
+            enemey.GetComponent<EnemySM>().targuet = player;
+
+            enemyCount--;
+
+            yield return new WaitForSeconds(spawnDelay);
         }
-
-        GameObject enemey = Instantiate(enemyPrefab, transform.position, Quaternion.identity);
-        enemey.GetComponent<EnemySM>().targuet = player;
-
-        enemyCount--;
+        
     }
 }
