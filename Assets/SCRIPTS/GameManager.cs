@@ -28,4 +28,16 @@ public class GameManager : MonoBehaviour
     {
         globalScore = globalScore + value;
     }
+
+    public void Die()
+    {
+        Time.timeScale = 0;
+    }
+
+    IEnumerator Pause(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+
+
+    }
 }

@@ -10,9 +10,9 @@ public class PlayerSM : MonoBehaviour
     [SerializeField] float speed;
     [SerializeField] float attackDuration = 1f;
     [SerializeField] AnimationCurve jumpCurve;
-    [SerializeField] float jumpDuration = 1f;
+    //[SerializeField] float jumpDuration = 1f;
     [SerializeField] float jumpHeight = 2f;
-    [SerializeField] float health = 10f;
+    [SerializeField] public float health = 10f;
     [SerializeField] GameObject attackPoint;
 
     Rigidbody2D rb2d;
@@ -71,6 +71,7 @@ public class PlayerSM : MonoBehaviour
                 break;
             case PlayerState.DEATH:
                 animator.SetTrigger("DEATH");
+                GameManager.instance.Die();
                 break;
             case PlayerState.JUMP:
                 animator.SetTrigger("JUMP");
@@ -234,7 +235,7 @@ public class PlayerSM : MonoBehaviour
     {
         switch (currentState)
         {
-            case PlayerState.IDLE:;
+            case PlayerState.IDLE:
                 break;
             case PlayerState.WALK:
                 rb2d.velocity = moveDirection.normalized * speed;
@@ -256,11 +257,14 @@ public class PlayerSM : MonoBehaviour
     public void TakeDamage(int damage)
     {
         health -= damage;
-        animator.SetTrigger("HURT");
 
         if (health < 0)
         {
             TransitionToState(PlayerState.DEATH);
+        } 
+        else
+        {
+            animator.SetTrigger("HURT");
         }
     }
 

@@ -20,11 +20,8 @@ public class Camera : MonoBehaviour
             return;
         }
 
-       
+        float xPosition = Mathf.Clamp(player.transform.position.x, 0, 106);
 
-        transform.position = new Vector3(player.transform.position.x, 0, transform.position.z) ;
-
-
-
+        transform.position = new Vector3(xPosition, 0, transform.position.z) ;
     }
 }
