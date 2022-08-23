@@ -12,7 +12,7 @@ public class EnemySM : MonoBehaviour
     [SerializeField] float attackDuration = 3f;
     [SerializeField] AnimationCurve jumpCurve;
     [SerializeField] float health = 20f;
-    [SerializeField] Transform targuet;
+    public Transform targuet;
     [SerializeField] float attackDistance = 0.5f;
     [SerializeField] GameObject attackPoint;
 
