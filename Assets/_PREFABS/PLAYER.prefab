@@ -26,7 +26,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 615274915}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.71, y: 0.29, z: 0}
+  m_LocalPosition: {x: 0.722, y: -0.33, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -212,19 +212,37 @@ MonoBehaviour:
       inWeight: 0
       outWeight: 0.02028181
     - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: -3.0361347
-      outSlope: -3.0361347
+      time: 0.35780096
+      value: 0.9991165
+      inSlope: -0.43827108
+      outSlope: -0.43827108
       tangentMode: 0
       weightedMode: 0
-      inWeight: 0.024338186
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.5475867
+      value: 0.28763616
+      inSlope: -1.6360967
+      outSlope: -1.6360967
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: -0.045151643
+      outSlope: -0.045151643
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.13526788
       outWeight: 0
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
   jumpHeight: 2
-  health: 1
+  health: 10
   attackPoint: {fileID: 615274915}
 --- !u!50 &4211252890904473710
 Rigidbody2D:
@@ -244,7 +262,7 @@ Rigidbody2D:
   m_GravityScale: 0
   m_Material: {fileID: 0}
   m_Interpolate: 0
-  m_SleepingMode: 1
+  m_SleepingMode: 0
   m_CollisionDetection: 0
   m_Constraints: 4
 --- !u!70 &4211252890904473705
@@ -360,7 +378,7 @@ Animator:
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: 2bea38408c8ea494f8bb34eddf5ea7af, type: 2}
   m_CullingMode: 0
-  m_UpdateMode: 0
+  m_UpdateMode: 2
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0

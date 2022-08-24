@@ -11,7 +11,7 @@ public class EnemySM : MonoBehaviour
     [SerializeField] float attackDelay = 1f;
     [SerializeField] float attackDuration = 3f;
     [SerializeField] AnimationCurve jumpCurve;
-    [SerializeField] float health = 20f;
+    [SerializeField] Health healthController;
     public Transform targuet;
     [SerializeField] float attackDistance = 0.5f;
     [SerializeField] GameObject attackPoint;
@@ -61,6 +61,7 @@ public class EnemySM : MonoBehaviour
                 break;
             case EnemyState.DEATH:
                 animator.SetTrigger("DEATH");
+                StartCoroutine(Destroy());
                 break;
         }
     }
@@ -68,17 +69,7 @@ public class EnemySM : MonoBehaviour
     {
         moveDirection = targuet.position - transform.position;
 
-        float distance = Vector2.Distance(targuet.position, transform.position);
-
-        if (moveDirection.magnitude != 0 && moveDirection.x < 0)
-        {
-            enemyGraphics.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
-        }
-
-        if (moveDirection.magnitude != 0 && moveDirection.x > 0)
-        {
-            enemyGraphics.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
-        }
+        float distance = Vector2.Distance(targuet.position, transform.position);        
 
         switch (currentState)
         {
@@ -92,39 +83,61 @@ public class EnemySM : MonoBehaviour
                     TransitionToState(EnemyState.ATTACK);
 
                 }
-                if (health <= 0)
+
+                if (healthController.health <= 0)
                 {
                     TransitionToState(EnemyState.DEATH);
                 }
 
                 break;
             case EnemyState.WALK:
+                if (moveDirection.magnitude != 0 && moveDirection.x < 0)
+                {
+                    enemyGraphics.rotation = Quaternion.Euler(new Vector3(0, 180, 0));
+                }
+
+                if (moveDirection.magnitude != 0 && moveDirection.x > 0)
+                {
+                    enemyGraphics.rotation = Quaternion.Euler(new Vector3(0, 0, 0));
+                }
+
                 rb2d.velocity = moveDirection.normalized * speed;
 
                 if (moveDirection.magnitude == 0)
                 {
                     TransitionToState(EnemyState.IDLE);
                 }
+
                 if (distance < attackDistance)
                 {
                     TransitionToState(EnemyState.ATTACK);
                 }
 
-                break;
-            case EnemyState.ATTACK:
-                if (Time.time > nextAttackTime)
+                if (healthController.health <= 0)
                 {
-                    attackPoint.SetActive(true);
-
-                    nextAttackTime = Time.time + attackDuration + attackDelay;
-                    animator.SetTrigger("ATTACK");
-
-                    StartCoroutine(DisableAttackPoint());
+                    TransitionToState(EnemyState.DEATH);
                 }
 
-                if (distance > attackDistance)
+                break;
+            case EnemyState.ATTACK:
+                //if (Time.time > nextAttackTime)
+                //{
+                //    attackPoint.SetActive(true);
+
+                //    nextAttackTime = Time.time + attackDuration + attackDelay;
+                //    animator.SetTrigger("ATTACK");
+
+                //    StartCoroutine(DisableAttackPoint());
+                //}
+
+                //if (distance > attackDistance)
+                //{
+                //    TransitionToState(EnemyState.WALK);
+                //}
+
+                if (healthController.health <= 0)
                 {
-                    TransitionToState(EnemyState.WALK);
+                    TransitionToState(EnemyState.DEATH);
                 }
 
                 break;
@@ -188,6 +201,13 @@ public class EnemySM : MonoBehaviour
         yield return new WaitForSeconds(attackDuration);
 
         attackPoint.SetActive(false);
+    }
+
+    IEnumerator Destroy()
+    {
+        yield return new WaitForSeconds(1);
+        
+        Destroy(gameObject);
     }
 }
 
