@@ -155,7 +155,8 @@ public class PlayerSM : MonoBehaviour
                     if(moveDirection.magnitude == 0)
                     {
                         TransitionToState(PlayerState.IDLE);
-                    } else
+                    } 
+                    else
                     {
                         TransitionToState(PlayerState.WALK);
                     }
