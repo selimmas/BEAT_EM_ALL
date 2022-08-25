@@ -5,6 +5,7 @@ using UnityEngine;
 public class Camera : MonoBehaviour
 {
     [SerializeField] GameObject player;
+    [SerializeField] GameObject fleche;
 
     // Start is called before the first frame update
     void Start()
@@ -23,5 +24,14 @@ public class Camera : MonoBehaviour
         float xPosition = Mathf.Clamp(player.transform.position.x, 0, 106);
 
         transform.position = new Vector3(xPosition, 0, transform.position.z) ;
+
+        if (fleche == null)
+        {
+            return;
+        }
+
+         
+
+        
     }
 }
