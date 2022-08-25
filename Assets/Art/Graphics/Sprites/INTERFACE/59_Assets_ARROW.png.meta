@@ -100,6 +100,18 @@ TextureImporter:
     overridden: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: WebGL
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -118,8 +130,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d970cd86642cba54fa98308ea70c3000
-      internalID: 370069270
+      spriteID: edb67aa2bc7db28429abed7318e73b5e
+      internalID: -924985858
       vertices: []
       indices: 
       edges: []
@@ -139,8 +151,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8759ce2c70f08ff448cc9c3769901fec
-      internalID: 1804057533
+      spriteID: 0de50794b4abdf54db39b2f774aaac72
+      internalID: -448462595
       vertices: []
       indices: 
       edges: []
@@ -160,8 +172,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 3ea44afd41ad3df459d42be4acd7bd64
-      internalID: 584158128
+      spriteID: 8de6f7de750ffc54489e5416b95e09bf
+      internalID: -259129952
       vertices: []
       indices: 
       edges: []
@@ -181,8 +193,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5eb1da85896f20c4ca85cab8a9a1eae7
-      internalID: 1899289007
+      spriteID: f6ec9c854f8c858428292fa1ad2e86c8
+      internalID: 774463631
       vertices: []
       indices: 
       edges: []
@@ -198,10 +210,10 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      59_Assets_ARROW_2: 584158128
-      59_Assets_ARROW_0: 370069270
-      59_Assets_ARROW_1: 1804057533
-      59_Assets_ARROW_3: 1899289007
+      59_Assets_ARROW_2: -259129952
+      59_Assets_ARROW_0: -924985858
+      59_Assets_ARROW_1: -448462595
+      59_Assets_ARROW_3: 774463631
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
